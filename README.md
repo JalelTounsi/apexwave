@@ -12,3 +12,7 @@ The React app implements a basic example for how to connect and pull data from t
 ## What is Uniswap v2?
 
 Uniswap V2 is the second iteration of the Uniswap, a protocol for automated token exchange on Ethereum. Read more about it in the [official documentation](https://uniswap.org/docs/v2/).
+
+## what to install
+
+npm i @uniswap/sdk @uniswap/sdk-core @uniswap/smart-order-router @uniswap/v3-sdk bootstrap ethers jsbi@3.2.5 react-bootstrap-icons react-spinners
