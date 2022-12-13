@@ -1,4 +1,5 @@
-import "./index.css";
+import 'bootstrap/dist/css/bootstrap.css';
+import './style/index.css';
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { DAppProvider, Mainnet } from "@usedapp/core";
@@ -10,7 +11,7 @@ import App from "./App";
 // IMPORTANT, PLEASE READ
 // To avoid disruptions in your app, change this to your own Infura project id.
 // https://infura.io/register
-const INFURA_PROJECT_ID = "529670718fd74cd2a041466303daecd7";
+const INFURA_PROJECT_ID = "817597f04d6941649c41255a1b10e815";
 const config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {

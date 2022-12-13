@@ -1,10 +1,11 @@
+
 import { useQuery } from "@apollo/client";
 import { Contract } from "@ethersproject/contracts";
 import { shortenAddress, useCall, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
 
 import { Body, Button, Container, Header, Image, Link } from "./components";
-import logo from "./ethereumLogo.png";
+import logo from "./media/ethereumLogo.png";
 
 import { MAINNET_ID, addresses, abis } from "@uniswap-v2-app/contracts";
 import GET_AGGREGATED_UNISWAP_DATA from "./graphql/subgraph";
