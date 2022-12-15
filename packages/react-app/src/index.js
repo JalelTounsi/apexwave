@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './style/index.css';
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { DAppProvider, Mainnet } from "@usedapp/core";
+import { DAppProvider, Mainnet, Sepolia, Goerli } from "@usedapp/core";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -13,9 +13,12 @@ import App from "./App";
 // https://infura.io/register
 const INFURA_PROJECT_ID = "817597f04d6941649c41255a1b10e815";
 const config = {
-  readOnlyChainId: Mainnet.chainId,
+  readOnlyChainId: Goerli.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]: "https://mainnet.infura.io/v3/" + INFURA_PROJECT_ID,
+    [Mainnet.chainId]: "https://mainnet.infura.io/v3/817597f04d6941649c41255a1b10e815",
+    [Sepolia.chainId]: "https://sepolia.infura.io/v3/817597f04d6941649c41255a1b10e815",
+    [Goerli.chainId]: "https://goerli.infura.io/v3/817597f04d6941649c41255a1b10e815"
+
   },
 }
 

@@ -3356,7 +3356,7 @@
     "@uniswap/v3-core" "1.0.0"
     "@uniswap/v3-periphery" "^1.0.1"
 
-"@usedapp/core@^1.1.5":
+"@usedapp/core@^1.1.5", "@usedapp/core@^1.2.2":
   "integrity" "sha512-+YbsFUer5ejQMxwlOJm5/6SAxPdtYMCHaZL1RhKRVPLiliGBGvRKO1ew2eWAkzRtWUnH8fAlBOdukzPVr8tsrg=="
   "resolved" "https://registry.npmjs.org/@usedapp/core/-/core-1.2.2.tgz"
   "version" "1.2.2"

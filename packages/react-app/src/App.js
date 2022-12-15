@@ -1,17 +1,25 @@
-
-import { useQuery } from "@apollo/client";
 import { Contract } from "@ethersproject/contracts";
 
 import { shortenAddress, useCall, useEthers, useLookupAddress } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
-import { ethers } from 'ethers';
+import { ethers } from "ethers";
 
 import { Body, Button, Container, Header, Image, Link } from "./components";
-import PageButton from "./components/PageButton";
+import CurrencyField from "./components/CurrencyField";
+
+import { GearFill } from "react-bootstrap-icons";
+import BeatLoader from "react-spinners/BeatLoader";
+
+import {
+  getFirstTokenContract,
+  getSecondTokenContract,
+  getPrice,
+  runSwap,
+} from "./logic/AlphaRouterService";
+
 import logo from "./media/ethereumLogo.png";
 
-import { MAINNET_ID, addresses, abis } from "@uniswap-v2-app/contracts";
-import GET_AGGREGATED_UNISWAP_DATA from "./graphql/subgraph";
+import { addresses, abis } from "@uniswap-v2-app/contracts";
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -92,34 +100,31 @@ function App() {
   //   </Container>
   // );
 
-  const [provider, setProvider] = useState(undefined)
-  const [signer, setSigner] = useState(undefined)
-  const [signerAddress, setSignerAddress] = useState(undefined)
-
-  // const [slippageAmount, setSlippageAmount] = useState(2)
-  // const [deadlineMinutes, setDeadlineMinutes] = useState(10)
-  // const [showModal, setShowModal] = useState(undefined)
-
-  // const [inputAmount, setInputAmount] = useState(undefined)
-  // const [outputAmount, setOutputAmount] = useState(undefined)
-  // const [transaction, setTransaction] = useState(undefined)
-  // const [loading, setLoading] = useState(undefined)
-  // const [ratio, setRatio] = useState(undefined)
-  // const [wethContract, setWethContract] = useState(undefined)
-  // const [uniContract, setUniContract] = useState(undefined)
-  // const [wethAmount, setWethAmount] = useState(undefined)
-  // const [uniAmount, setUniAmount] = useState(undefined)
+  const [provider, setProvider] = useState(undefined);
+  const [signer, setSigner] = useState(undefined);
+  const [signerAddress, setSignerAddress] = useState(undefined);
+  const [slippageAmount, setSlippageAmount] = useState(1)
+  const [deadlineMinutes, setDeadlineMinutes] = useState(10)
+  const [inputAmount, setInputAmount] = useState(undefined);
+  const [outputAmount, setOutputAmount] = useState(undefined);
+  const [transaction, setTransaction] = useState(undefined);
+  const [loading, setLoading] = useState(undefined);
+  const [ratio, setRatio] = useState(undefined);
+  const [FirstTokenContract, setFirstTokenContract] = useState(undefined);
+  const [SecondTokenContract, setSecondTokenContract] = useState(undefined);
+  const [FirstTokenAmount, setFirstTokenAmount] = useState(undefined);
+  const [SecondTokenAmount, setSecondTokenAmount] = useState(undefined);
 
   useEffect(() => {
     const onLoad = async () => {
       const provider = await new ethers.providers.Web3Provider(window.ethereum);
       setProvider(provider);
 
-      // const wethContract = getWethContract();
-      // setWethContract(wethContract);
+      const FirstTokenContract = getFirstTokenContract();
+      setFirstTokenContract(FirstTokenContract);
 
-      // const uniContract = getUniContract();
-      // setUniContract(uniContract);
+      const SecondTokenContract = getSecondTokenContract();
+      setSecondTokenContract(SecondTokenContract);
     };
     onLoad();
   }, []);
@@ -133,19 +138,18 @@ function App() {
   const isConnected = () => signer !== undefined;
 
   const getWalletAddress = () => {
-    signer.getAddress()
-          .then((address) => {
-            setSignerAddress(address);
+    signer.getAddress().then((address) => {
+      setSignerAddress(address);
 
-      // todo: connect weth and uni contracts
-      // wethContract.balanceOf(address)
-      //             .then((res) => {
-      //               setWethAmount(Number(ethers.utils.formatEther(res)));
-      // });
-      // uniContract.balanceOf(address)
-      //            .then((res) => {
-      //             setUniAmount(Number(ethers.utils.formatEther(res)));
-      // });
+      // todo: connect FirstToken and uni contracts
+      FirstTokenContract.balanceOf(address)
+        .then((res) => {
+          setFirstTokenAmount(Number(ethers.utils.formatEther(res)));
+        });
+      SecondTokenContract.balanceOf(address)
+        .then((res) => {
+          setSecondTokenAmount(Number(ethers.utils.formatEther(res)));
+        });
     });
   };
 
@@ -153,45 +157,89 @@ function App() {
     getWalletAddress();
   }
 
-  // const getSwapPrice = (inputAmount) => {
-  //   setLoading(true);
-  //   setInputAmount(inputAmount);
+  const getSwapPrice = (inputAmount) => {
+    setLoading(true);
+    setInputAmount(inputAmount);
 
-  //   const swap = getPrice(
-  //     inputAmount,
-  //     slippageAmount,
-  //     Math.floor(Date.now() / 1000 + deadlineMinutes * 60),
-  //     signerAddress
-  //   ).then((data) => {
-  //     setTransaction(data[0]);
-  //     setOutputAmount(data[1]);
-  //     setRatio(data[2]);
-  //     setLoading(false);
-  //   });
-  // };
+    const swap = getPrice(
+      inputAmount,
+      slippageAmount,
+      Math.floor(Date.now() / 1000 + deadlineMinutes * 60),
+      signerAddress
+    ).then((data) => {
+      setTransaction(data[0]);
+      setOutputAmount(data[1]);
+      setRatio(data[2]);
+      setLoading(false);
+    });
+  };
 
-  return(
+  return (
     <div className="App">
       <Container>
-       <Header>
-         <WalletButton />
-       </Header>
-       <Body>
-        <div className="row">
-          <div className="col-md-8">
-          <Image src={logo} alt="ethereum-logo" />
-         <p>Edit <code>packages/react-app/src/App.js</code> and save to reload.</p>
-          </div>
-          <div className="col-md-4">
-            <ul>
-              <li><Link href="https://reactjs.org">Learn React</Link></li>
-              <li><Link href="https://usedapp.io/">Learn useDapp</Link></li>
-              <li><Link href="https://uniswap.org/docs/v2/">Learn Uniswap v2</Link></li>
-            </ul>
+        <Header>
+          <WalletButton />
+        </Header>
+        <Body>
+          <div className="row">
+            <div className="col-md-4">
+              <Image src={logo} alt="ethereum-logo" />
+              <p>
+                <code>GoldmanSats</code>, the DeFi liquidity aggregator
+              </p>
             </div>
-        </div>
+            <div className="col-md-8">
 
-       </Body>
+                <div className="swapContainer">
+                  <div className="swapHeader">
+                    <span className="swapText">Swap</span>
+                  </div>
+
+                  <div className="swapBody">
+                    <CurrencyField
+                      field="input"
+                      tokenName="DAI"
+                      getSwapPrice={getSwapPrice}
+                      signer={signer}
+                      balance={FirstTokenAmount}
+                    />
+                    <CurrencyField
+                      field="output"
+                      tokenName="WETH"
+                      value={outputAmount}
+                      signer={signer}
+                      balance={SecondTokenAmount}
+                      spinner={BeatLoader}
+                      loading={loading}
+                    />
+                  </div>
+
+                  <div className="ratioContainer">
+                    {ratio && <>{`1 DAI = ${ratio} WETH`}</>}
+                  </div>
+
+                  <div className="swapButtonContainer">
+                    {isConnected() ? (
+                      <div
+                        onClick={() => runSwap(transaction, signer)}
+                        className="swapButton"
+                      >
+                        Swap
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => getSigner(provider)}
+                        className="swapButton"
+                      >
+                        Connect Wallet
+                      </div>
+                    )}
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </Body>
       </Container>
     </div>
   );
