@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Body = styled.div`
   align-items: center;
-  color: white;
+  color: #e3eef3;!important
   display: flex;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
@@ -11,8 +11,8 @@ export const Body = styled.div`
 `;
 
 export const Button = styled.button`
-  background-color: white;
-  border: none;
+  background-color: limegreen;
+  border: 1px solid;
   border-radius: 8px;
   color: #282c34;
   cursor: pointer;
@@ -33,6 +33,7 @@ export const Container = styled.div`
 export const Header = styled.header`
   align-items: center;
   background-color: #282c34;
+  background-color: #061e4d;!important
   color: white;
   display: flex;
   flex-direction: row;
@@ -41,8 +42,14 @@ export const Header = styled.header`
 `;
 
 export const Image = styled.img`
-  height: 40vmin;
+  height: 50vmin;
   margin-bottom: 16px;
+  pointer-events: none;
+`;
+
+export const ImageButton = styled.img`
+  height: 32px;
+  width: 32px;
   pointer-events: none;
 `;
 
@@ -50,6 +57,6 @@ export const Link = styled.a.attrs({
   target: "_blank",
   rel: "noopener noreferrer",
 })`
-  color: #61dafb;
   margin-top: 8px;
+  text-decoration: none;
 `;

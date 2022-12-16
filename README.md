@@ -15,4 +15,14 @@ Uniswap V2 is the second iteration of the Uniswap, a protocol for automated toke
 
 ## what to install
 
-npm i @uniswap/sdk @uniswap/sdk-core @uniswap/smart-order-router @uniswap/v3-sdk bootstrap ethers jsbi@3.2.5 react-bootstrap-icons react-spinners @metamask/detect-provider
+@uniswap/sdk
+@uniswap/sdk-core
+@uniswap/smart-order-router
+@uniswap/v3-sdk
+bootstrap
+ethers
+jsbi@3.2.5
+react-bootstrap-icons
+react-spinners
+@metamask/detect-provider
+react-bootstrap

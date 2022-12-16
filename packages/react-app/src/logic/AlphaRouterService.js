@@ -10,11 +10,18 @@ const { ethers, BigNumber } = require("ethers");
 const JSBI = require("jsbi");
 const ERC20ABI = require("./erc20.abi.json");
 
-const V3_SWAP_ROUTER_ADDRESS = "0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9";
-const INFURA_URL_ =
-  "https://goerli.infura.io/v3/817597f04d6941649c41255a1b10e815";
-const CHAIN_ID = 1;
-const web3Provider = new ethers.providers.JsonRpcProvider(INFURA_URL_);
+const mainnet_chainId = 1;
+const sepolia_chainId = 11155111;
+const Goerli_chainId = 5;
+
+const V3_SWAP_ROUTER_ADDRESS = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;//0xE592427A0AEce92De3Edee1F18E0157C05861564;
+
+const INFURA_URL_GOERLI = 'https://goerli.infura.io/v3/817597f04d6941649c41255a1b10e815';
+const INFURA_URL_MAINNET = 'https://mainnet.infura.io/v3/817597f04d6941649c41255a1b10e815';
+
+const CHAIN_ID = mainnet_chainId;
+const INFURA_URL = INFURA_URL_MAINNET
+const web3Provider = new ethers.providers.JsonRpcProvider(INFURA_URL);
 const router = new AlphaRouter({ chainId: CHAIN_ID, provider: web3Provider });
 
 //les tokens (pour le moment c'est hardcoded)
@@ -22,12 +29,12 @@ const router = new AlphaRouter({ chainId: CHAIN_ID, provider: web3Provider });
 const nameFirstToken = "DAI";
 const symbolFirstToken = "DAI";
 const decimalsFirstToken = 18;
-const addressFirstToken = "0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E";
+const addressFirstToken = CHAIN_ID === mainnet_chainId ? "0x6B175474E89094C44Da98b954EedeAC495271d0F" : "0x73967c6a0904aA032C103b4104747E88c566B1A2";
 
 const nameSecondToken = "WETH";
 const symbolSecondToken = "WETH";
 const decimalsSecondToken = 18;
-const addressSecondToken = "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
+const addressSecondToken = CHAIN_ID === mainnet_chainId ? "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" : "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6";
 
 const FirstToken = new Token(
   CHAIN_ID,

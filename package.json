@@ -31,6 +31,7 @@
     "bootstrap": "^5.2.3",
     "ethers": "^5.7.2",
     "jsbi": "^3.2.5",
+    "react-bootstrap": "^2.7.0",
     "react-bootstrap-icons": "^1.10.2",
     "react-spinners": "^0.13.7"
   }
