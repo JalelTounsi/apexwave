@@ -23,13 +23,3 @@ yarn-error.log*
 *.old
 *.pack
 packages/react-app/node_modules/.cache/*
-packages/react-app/node_modules/.cache/.eslintcache
-packages/react-app/node_modules/.cache/default-development/0.pack
-packages/react-app/node_modules/.cache/default-development/1.pack
-packages/react-app/node_modules/.cache/default-development/2.pack
-packages/react-app/node_modules/.cache/default-development/3.pack
-packages/react-app/node_modules/.cache/default-development/4.pack
-packages/react-app/node_modules/.cache/default-development/5.pack
-packages/react-app/node_modules/.cache/default-development/6.pack
-packages/react-app/node_modules/.cache/default-development/index.pack
-packages/react-app/node_modules/.cache/default-development/index.pack.old
